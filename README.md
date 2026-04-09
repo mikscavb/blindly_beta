@@ -4,7 +4,7 @@
 
 # Blindly
 
-Blindly is a local-first desktop app for blind smelling evaluation of perfume materials.
+Blindly is a local-first desktop app for blind smelling evaluation of perfume materials. I built this because I got tired of excel sheets. The way I use it is with 2ml amber sample bottles with only 0.1g of material in each and little plug inserts to help prevent evaporation when not in use. Each bottle has a 3 digit code on a sticker on its bottom. To make blind smelling and training efficient, I built Blindly.
 
 Current public release: `1.0.0`
 
