@@ -16,6 +16,12 @@ Current public release: `1.0.0`
 - import materials and bottles from CSV
 - export and restore the local SQLite database
 
+## Screenshots
+![Blindly Start Screen](design/session%20start.png)
+![Blindly Session Screen](design/ongoing%20session.png)
+![Blindly Inventory](design/inventory.png)
+![Blindly Anayltics](design/performance.png)
+
 ## Installers
 
 Installer assets should be downloaded from the repository's
