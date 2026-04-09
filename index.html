@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/app-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d0f0d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --launch-background: #0d0f0d;
+        --launch-accent: #a2d398;
+        --launch-text: #e1e7df;
+        --launch-muted: rgba(225, 231, 223, 0.62);
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--launch-background);
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        overflow: hidden;
+        font-family:
+          Inter, "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      #launch-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background-color: var(--launch-background);
+        background:
+          linear-gradient(180deg, #111412 0%, var(--launch-background) 100%),
+          repeating-linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.02) 0,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 4px
+          );
+        transition:
+          opacity 180ms ease,
+          visibility 180ms ease;
+      }
+
+      #launch-splash.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .launch-card {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        justify-items: center;
+        gap: 0.95rem;
+        width: min(100%, 25rem);
+        padding: 1rem 1.25rem;
+        text-align: center;
+      }
+
+      .launch-mark {
+        width: 5.5rem;
+        height: 5.5rem;
+        object-fit: contain;
+        margin-bottom: 0.35rem;
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.34));
+      }
+
+      .launch-kicker {
+        margin: 0;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--launch-muted);
+      }
+
+      .launch-kicker {
+        font-size: 0.68rem;
+      }
+
+      .launch-card h1 {
+        margin: 0;
+        font-family: "Space Grotesk", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+        font-size: clamp(2.4rem, 5vw, 3.2rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        padding-left: 0.2em;
+        text-transform: uppercase;
+        color: var(--launch-accent);
+        text-shadow: 0 0 18px rgba(162, 211, 152, 0.18);
+      }
+
+      .launch-boot {
+        display: grid;
+        gap: 0.7rem;
+        width: min(100%, 15rem);
+        margin-top: 0.55rem;
+        padding: 0.8rem 0.9rem;
+        border: 1px solid rgba(162, 211, 152, 0.18);
+        background: rgba(0, 0, 0, 0.26);
+        text-align: left;
+        font-family:
+          ui-monospace, "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono",
+          Menlo, monospace;
+        color: var(--launch-accent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        animation: launch-boot-panel-flash 180ms steps(1, end) 1.9s 2;
+      }
+
+      .launch-boot-line {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-width: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .launch-boot-label {
+        flex: 0 0 auto;
+        color: rgba(162, 211, 152, 0.82);
+      }
+
+      .launch-boot-value {
+        flex: 1 1 auto;
+        min-width: 0;
+        color: var(--launch-accent);
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .launch-cursor {
+        display: inline-block;
+        width: 0.7ch;
+        height: 1em;
+        margin-left: 0.18rem;
+        vertical-align: -0.12em;
+        background: currentColor;
+        animation: launch-cursor-blink 300ms steps(1, end) 6;
+      }
+
+      .launch-pixels {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 0.22rem;
+      }
+
+      .launch-boot-complete {
+        opacity: 0;
+        color: var(--launch-text);
+        animation: launch-boot-complete 260ms steps(1, end) 1.86s 1 forwards;
+      }
+
+      .launch-pixel {
+        aspect-ratio: 1;
+        background: rgba(162, 211, 152, 0.12);
+        animation: launch-pixel-boot 240ms steps(1, end) 1 both;
+      }
+
+      .launch-pixel:nth-child(2) {
+        animation-delay: 0.12s;
+      }
+
+      .launch-pixel:nth-child(3) {
+        animation-delay: 0.24s;
+      }
+
+      .launch-pixel:nth-child(4) {
+        animation-delay: 0.36s;
+      }
+
+      .launch-pixel:nth-child(5) {
+        animation-delay: 0.48s;
+      }
+
+      .launch-pixel:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      .launch-pixel:nth-child(7) {
+        animation-delay: 0.72s;
+      }
+
+      .launch-pixel:nth-child(8) {
+        animation-delay: 0.84s;
+      }
+
+      .launch-pixel:nth-child(9) {
+        animation-delay: 0.96s;
+      }
+
+      .launch-pixel:nth-child(10) {
+        animation-delay: 1.08s;
+      }
+
+      .launch-pixel:nth-child(11) {
+        animation-delay: 1.2s;
+      }
+
+      .launch-pixel:nth-child(12) {
+        animation-delay: 1.32s;
+      }
+
+      @keyframes launch-pixel-boot {
+        0% {
+          background: rgba(162, 211, 152, 0.12);
+          transform: none;
+        }
+
+        100% {
+          background: var(--launch-accent);
+          box-shadow: 0 0 0 1px rgba(162, 211, 152, 0.24);
+        }
+      }
+
+      @keyframes launch-cursor-blink {
+        0%,
+        49% {
+          opacity: 1;
+        }
+
+        50%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes launch-boot-complete {
+        0% {
+          opacity: 0;
+          color: var(--launch-text);
+        }
+
+        50% {
+          opacity: 1;
+          color: var(--launch-background);
+          background: var(--launch-accent);
+        }
+
+        100% {
+          opacity: 1;
+          color: var(--launch-text);
+          background: transparent;
+        }
+      }
+
+      @keyframes launch-boot-panel-flash {
+        0%,
+        100% {
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        50% {
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.03),
+            0 0 0 1px rgba(162, 211, 152, 0.22);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .launch-cursor,
+        .launch-pixel,
+        .launch-boot,
+        .launch-boot-complete {
+          animation: none;
+        }
+
+        .launch-cursor {
+          display: none;
+        }
+
+        .launch-pixel {
+          background: var(--launch-accent);
+          box-shadow: 0 0 0 1px rgba(162, 211, 152, 0.24);
+        }
+
+        .launch-boot-complete {
+          opacity: 1;
+        }
+      }
+    </style>
+    <title>Blindly</title>
+  </head>
+  <body>
+    <div id="launch-splash" aria-hidden="true">
+      <section class="launch-card">
+        <img class="launch-mark" src="/app-icon.png" alt="" width="88" height="88" />
+        <p class="launch-kicker">Local-first smell training</p>
+        <h1>Blindly</h1>
+        <div class="launch-boot" aria-hidden="true">
+          <div class="launch-boot-line">
+            <span class="launch-boot-label">BOOT</span>
+            <span class="launch-boot-value">LOCAL DATA OK<span class="launch-cursor"></span></span>
+          </div>
+          <div class="launch-pixels">
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+            <span class="launch-pixel"></span>
+          </div>
+          <div class="launch-boot-line launch-boot-complete">
+            <span class="launch-boot-label">SYS</span>
+            <span class="launch-boot-value">&gt; BOOT COMPLETE</span>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

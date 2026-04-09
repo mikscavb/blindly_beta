@@ -1,0 +1,67 @@
+name: publish-installers
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release-assets:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+            rust_targets: ''
+            args: ''
+          - platform: macos-latest
+            rust_targets: 'aarch64-apple-darwin'
+            args: '--target aarch64-apple-darwin'
+          - platform: macos-latest
+            rust_targets: 'x86_64-apple-darwin'
+            args: '--target x86_64-apple-darwin'
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Add Rust target
+        if: ${{ matrix.rust_targets != '' }}
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_targets }}
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build and upload release assets
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Blindly ${{ github.ref_name }}
+          releaseBody: |
+            Unsigned community build.
+
+            Windows may show a Microsoft Defender SmartScreen warning.
+            macOS may show a Gatekeeper warning because the app is not signed or notarized.
+
+            If you are not comfortable bypassing those warnings, build the app from source from this tagged commit instead.
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}

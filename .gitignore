@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+
+# Tauri / Rust
+src-tauri/target/
+
+# Local data
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+data/
+exports/
+backups/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+

@@ -1,0 +1,77 @@
+:root {
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background: #0d0f0d;
+  --surface: #111412;
+  --surface-low: #171b17;
+  --surface-high: #212722;
+  --surface-deep: #000000;
+  --primary: #a2d398;
+  --primary-dim: #95c58b;
+  --error: #ed7f64;
+  --text-strong: #e1e7df;
+  --text-muted: #9b9f9a;
+  --outline: rgba(67, 73, 68, 0.42);
+
+  --font-body:
+    Inter, "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display:
+    "Space Grotesk", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+  --font-label:
+    "Space Grotesk", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--background);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  border-radius: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+#root {
+  min-height: 100vh;
+}
