@@ -1,3 +1,4 @@
+![Blindly icon](design/blindly%20icon.png)
 # Blindly
 
 Blindly is a local-first desktop app for blind smelling evaluation of perfume materials.
