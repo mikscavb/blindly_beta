@@ -1,4 +1,6 @@
-![Blindly icon](design/blindly%20icon.png)
+  <p align="center">
+    <img src="design/blindly%20icon.png" alt="Blindly icon" width="160">
+  </p>
 # Blindly
 
 Blindly is a local-first desktop app for blind smelling evaluation of perfume materials.
